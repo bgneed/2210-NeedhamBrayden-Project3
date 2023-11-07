@@ -38,6 +38,17 @@ namespace _2210_NeedhamBrayden_Project3
             TotalSales = 0;
         }
 
+        public Dock()
+        {
+            IdNumber = "0";
+            Line = new Queue<Truck>();
+            TotalSales = 0;
+            TotalCrates = 0;
+            TimeNotInUse = 0;
+            TotalTrucks = 0;
+            TotalTimeInUse = 0;
+        }
+
         public void JoinLine(Truck truck)
         {
             Line.Enqueue(truck);

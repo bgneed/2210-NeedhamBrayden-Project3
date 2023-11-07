@@ -14,7 +14,8 @@ namespace _2210_NeedhamBrayden_Project3
     {
         static void Main(string[] args)
         {
-            
+            Warehouse warehouse = new Warehouse();
+            warehouse.Run();
         }
     }
 }
