@@ -3,7 +3,7 @@
 * Project name: 2210-NeedhamBrayden-Project3                         *
 * File name: Program.cs                                              *   
 *--------------------------------------------------------------------*
-* Author’s name and email: Brayden Needham | needhambg@etsu.edu      *
+* Authors' Names: Brayden Needham, Jacob Sullivan, and Terry McCulley*
 * Course-Section: 2210-001                                           *   
 * Creation Date:11/2/2023                                            *   
 * -------------------------------------------------------------------*
