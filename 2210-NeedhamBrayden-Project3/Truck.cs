@@ -23,6 +23,13 @@ namespace _2210_NeedhamBrayden_Project3
 
         public Stack<Crate> Trailer { get; set; }
 
+        public Truck()
+        {
+            Driver = "Bob";
+            DeliveryCompany = "Bob Incorporated";
+            Trailer = new Stack<Crate>();
+        }
+
         /// <summary>
         /// A method used to Push a new crate into the stack named Trailer
         /// </summary>
