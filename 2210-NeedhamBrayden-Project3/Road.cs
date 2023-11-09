@@ -25,6 +25,10 @@ namespace _2210_NeedhamBrayden_Project3
         {
             WaitLine = new Queue<Truck>();
         }
+        public void AddToWaitLine()
+        {
+
+        }
         //Earlier time increments will be slower with truck creation. Mid time increments will be a lot more full
         //late time increments will be slower as well
     }
