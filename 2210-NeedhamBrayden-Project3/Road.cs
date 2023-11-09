@@ -27,7 +27,39 @@ namespace _2210_NeedhamBrayden_Project3
         }
         public void AddToWaitLine()
         {
+            //This will add trucks to the waitline based on the time of day
+            if(TimeIncrement.GetIncrement() == "Early Morning")
+            {
 
+            }
+            else if (TimeIncrement.GetIncrement() == "Morning")
+            {
+
+            }
+            else if (TimeIncrement.GetIncrement() == "Midday")
+            {
+
+            }
+            else if (TimeIncrement.GetIncrement() == "Pre Noon")
+            {
+
+            }
+            else if (TimeIncrement.GetIncrement() == "Noon")
+            {
+                //Busiest time of day
+            }
+            else if (TimeIncrement.GetIncrement() == "After Noon")
+            {
+
+            }
+            else if (TimeIncrement.GetIncrement() == "Evening")
+            {
+
+            }
+            else if (TimeIncrement.GetIncrement() == "End of Day")
+            {
+
+            }
         }
         //Earlier time increments will be slower with truck creation. Mid time increments will be a lot more full
         //late time increments will be slower as well

@@ -4,6 +4,7 @@ namespace Tests
     [TestClass]
     public class UnitTest1
     {
+        [TestCategory("Crate Tests")]
         [TestMethod]
         public void CrateDefaultCtorTest()
         {
@@ -26,6 +27,20 @@ namespace Tests
             Crate crate = new Crate("061543",20);
             Assert.IsNotNull(crate);
             Assert.AreEqual(crate.GetTime(),(uint)20);
+        }
+        [TestCategory("Time Increment Test")]
+        [TestMethod]
+        public void AddTime()
+        {
+            TimeIncrement.AddIncrement();
+            Assert.AreEqual(TimeIncrement.GetIncrement(), "Early Morning");
+            TimeIncrement.AddIncrement();
+            TimeIncrement.AddIncrement();
+            TimeIncrement.AddIncrement();
+            TimeIncrement.AddIncrement();
+            TimeIncrement.AddIncrement();
+            TimeIncrement.AddIncrement();
+            Assert.AreEqual(TimeIncrement.GetIncrement(), "Morning");
         }
     }
 }

@@ -62,15 +62,11 @@ namespace _2210_NeedhamBrayden_Project3
             {
                 return "After Noon";
             }
-            else if (Increment >= 400 && Increment <= 460)
+            else if (Increment >= 400 && Increment <= 480)
             {
                 return "Evening";
             }
-            else if (Increment >= 470 && Increment <= 520)
-            {
-                return "Late Evening";
-            }
-            else if (Increment >= 530)
+            else if (Increment >= 480)
             {
                 return "End of Day";
             }
