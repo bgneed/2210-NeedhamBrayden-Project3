@@ -49,8 +49,8 @@ namespace _2210_NeedhamBrayden_Project3
 
             for (int i = 0; i < crates.Length; i++)
             {
-                Crate data = truck.Unload();
-                Console.WriteLine(data.IdNumber + "\t"+ "$" + data.Price);
+                //Crate data = truck.Unload();
+                //Console.WriteLine(data.IdNumber + "\t"+ "$" + data.Price);
                 //I'll find out how to implement the time increments soon, just sending this in to save it
             }
         }
