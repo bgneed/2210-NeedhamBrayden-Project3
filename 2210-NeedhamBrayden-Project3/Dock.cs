@@ -25,8 +25,8 @@ namespace _2210_NeedhamBrayden_Project3
         public List<Crate> Crates { get; set; }
         public Crate CurrentCrate { get; set; }
         public int TotalTrucks { get; set; }
-        public int TotalTimeInUse { get; set; }
-        public int TimeNotInUse { get; set; }
+        public uint TotalTimeInUse { get; set; }
+        public uint TimeNotInUse { get; set; }
         public Dock()
         {
             IdNumber = "0";
@@ -37,19 +37,36 @@ namespace _2210_NeedhamBrayden_Project3
             TotalTrucks = 0;
             TimeNotInUse = 0;
             TotalSales = 0;
+            TotalTimeInUse = 0;
         }
 
         public void JoinLine(Truck truck)
         {
             Line.Enqueue(truck);
         }
+
+        /// <summary>
+        /// Unloads a truck and sends it off. Also notes the time it took to unload the truck
+        /// </summary>
+        /// <returns>The sent off truck</returns>
         public Truck SendOff()
         {
-            return Line.Dequeue();
+            Truck truck = Line.Dequeue();
+            int count = truck.Trailer.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                truck.Unload(out uint unloadTime);
+                TotalTimeInUse += unloadTime;
+            }
+
+            return truck;
         }
         public Crate RemoveCrate()
         {
-            CurrentCrate = new Crate(CurrentTruck.Unload());
+            uint removalTime;
+            CurrentCrate = new Crate(CurrentTruck.Unload(out removalTime));
+            CurrentCrate.TimeWhenUnloaded = removalTime;
             Crates.Add(CurrentCrate);
             return CurrentCrate;
         }
