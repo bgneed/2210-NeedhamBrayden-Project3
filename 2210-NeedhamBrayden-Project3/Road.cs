@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 * Project name: 2210-NeedhamBrayden-Project3                         *
 * File name: Road.cs                                                 *   
 *--------------------------------------------------------------------*
-* Authors' Names: Brayden Needham, Jacob Sullivan, and Terry McCulley*
+* Author’s names: Brayden Needham, Jacob Sullins, and Terry McCulley *
 * Course-Section: 2210-001                                           *   
 * Creation Date:11/2/2023                                            *   
 * -------------------------------------------------------------------*
