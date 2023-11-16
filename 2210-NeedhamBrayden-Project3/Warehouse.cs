@@ -20,6 +20,7 @@ namespace _2210_NeedhamBrayden_Project3
         public List<Dock> Docks { get; set; }
         public Queue<Truck> Entrance { get; set; }
 
+
         public Warehouse() 
         {
             Docks = new List<Dock>();
@@ -52,6 +53,27 @@ namespace _2210_NeedhamBrayden_Project3
                 //Crate data = truck.Unload();
                 //Console.WriteLine(data.IdNumber + "\t"+ "$" + data.Price);
                 //I'll find out how to implement the time increments soon, just sending this in to save it
+            }
+        }
+        //In here we need to Assign Trucks in the entrance to each dock as they become available
+        public void AssignTruckToDock()
+        {
+            bool emptyDockFound = false;
+            int currentDock = 0;
+            while (emptyDockFound != true) 
+            {
+                if (Docks[currentDock].CurrentTruck == null)
+                {
+                    emptyDockFound = true;
+                    Docks[currentDock].NewTruckIn(Entrance.Dequeue());
+                }
+            }
+        }
+        public void AddToEntrance(Queue<Truck> trucksFromRoad)
+        {
+            for(int i = 0; i < trucksFromRoad.Count;i++)
+            {
+                Entrance.Enqueue(trucksFromRoad.Dequeue());
             }
         }
     }

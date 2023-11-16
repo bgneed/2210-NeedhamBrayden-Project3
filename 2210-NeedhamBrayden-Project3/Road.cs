@@ -27,39 +27,39 @@ namespace _2210_NeedhamBrayden_Project3
         }
         public void AddToWaitLine()
         {
-            //This will add trucks to the waitline based on the time of day
-            if(TimeIncrement.GetIncrement() == "Early Morning")
-            {
-
-            }
-            else if (TimeIncrement.GetIncrement() == "Morning")
-            {
-
-            }
-            else if (TimeIncrement.GetIncrement() == "Midday")
-            {
-
-            }
-            else if (TimeIncrement.GetIncrement() == "Pre Noon")
-            {
-
-            }
-            else if (TimeIncrement.GetIncrement() == "Noon")
-            {
-                //Busiest time of day
-            }
-            else if (TimeIncrement.GetIncrement() == "After Noon")
-            {
-
-            }
-            else if (TimeIncrement.GetIncrement() == "Evening")
-            {
-
-            }
-            else if (TimeIncrement.GetIncrement() == "End of Day")
-            {
-
-            }
+            ////This will add trucks to the waitline based on the time of day
+            //if(TimeIncrement.GetIncrement() == "Early Morning")
+            //{
+            //    //up to 5 trucks will come during this time frame
+            //}
+            //else if (TimeIncrement.GetIncrement() == "Morning")
+            //{
+            //    //up to 3 trucks will come during this time frame
+            //}
+            //else if (TimeIncrement.GetIncrement() == "Midday")
+            //{
+            //    //up to 5 trucks will come during this time frame
+            //}
+            //else if (TimeIncrement.GetIncrement() == "Pre Noon")
+            //{
+            //    //up to 6 trucks will come during this time frame
+            //}
+            //else if (TimeIncrement.GetIncrement() == "Noon")
+            //{
+            //    //up to 10 trucks will come during this time frame
+            //}
+            //else if (TimeIncrement.GetIncrement() == "After Noon")
+            //{
+            //    //up to 4 trucks will come during this time frame
+            //}
+            //else if (TimeIncrement.GetIncrement() == "Evening")
+            //{
+            //    //up to 3 trucks
+            //}
+            //else if (TimeIncrement.GetIncrement() == "End of Day")
+            //{
+            //    //up to 2 trucks
+            //}
         }
         //Earlier time increments will be slower with truck creation. Mid time increments will be a lot more full
         //late time increments will be slower as well

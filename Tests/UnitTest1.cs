@@ -48,14 +48,14 @@ namespace Tests
         public void CreateListOfCrates()
         {
             //Arrange
-            Truck truck = new();
-            List<Crate> crates = new();
+            Truck truck = new Truck();
+            List<Crate> crates = new List<Crate>();
 
             //Act
             crates = truck.GenerateCrates();
 
             //Assert
-            Assert.IsTrue(crates.Count > 0 && crates.Count <= 100);
+            Assert.IsTrue(crates.Count > 0 && crates.Count <= 5);
         }
 
         [TestMethod]
@@ -122,65 +122,13 @@ namespace Tests
             //Assert
             Assert.AreEqual(time, unloadTime);
         }
-
         [TestCategory("Dock Tests")]
         [TestMethod]
-        public void JoinLineIncrementsCount()
+        public void TruckEnterDock()
         {
-            //Arrange
+            Dock dock = new Dock();
             Truck truck = new();
-            Dock dock = new();
-
-            //Act
-            dock.JoinLine(truck);
-
-            //Assert
-            Assert.AreEqual(1, dock.Line.Count);
-        }
-
-        [TestMethod]
-        public void SendOffReturnsTruck()
-        {
-            //Arrange
-            Crate crate = new();
-            Truck truck = new();
-            Dock dock = new();
-            truck.Load(crate);
-            dock.JoinLine(truck);
-
-            //Act
-            Truck returned = dock.SendOff();
-
-            //Assert
-            Assert.AreEqual(truck, returned);
-        }
-
-        [TestMethod]
-        public void SendOffIncrementsTime()
-        {
-            //Arrange
-            string ID = "1";
-            uint time = 10;
-            List<Crate> crates = new();
-
-            for (int i = 0; i < 10; i++)
-            {
-                Crate c = new(ID, time);
-                crates.Add(c);
-            }
-
-            Truck truck = new();
-            Dock dock = new();
-
-            //Act
-            truck.Load(crates);
-
-            dock.JoinLine(truck);
-
-            dock.SendOff();
-
-            //Assert
-            Assert.AreEqual((uint)100, dock.TotalTimeInUse);
+            dock.NewTruckIn(truck);
         }
     }
 }
