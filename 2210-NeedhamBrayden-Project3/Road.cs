@@ -27,11 +27,12 @@ namespace _2210_NeedhamBrayden_Project3
         public uint Time;
         //Also crate creation will take place inside of the truck creation and a random Id number will be given to each crate that will then
         //be tracked here to make sure each crate is unique and has a different number than every other crate
-        public Road()
+        public Road(Warehouse warehouse)
         {
             WaitLine = new Queue<Truck>();
             Likelihood = 0;
             Time = 0;
+            Warehouse = warehouse;
         }
 
         public void AddToWaitLine()
@@ -83,7 +84,7 @@ namespace _2210_NeedhamBrayden_Project3
 
         public void QueueTrucks()
         {
-            for (int i = 0; i < Likelihood; i++)
+            for (int i = 0; i <= Likelihood; i++)
             {
                 Truck truck = new();
                 WaitLine.Enqueue(truck);
@@ -142,9 +143,10 @@ namespace _2210_NeedhamBrayden_Project3
 
         public void UpdateTimeViaDock()
         {
+            int i;
             foreach (Dock d in Warehouse.Docks)
             {
-                d.UpdateDock();
+                d.UpdateDock(Warehouse.Entrance, Time, out i);
             }
             IncrementTime();
         }

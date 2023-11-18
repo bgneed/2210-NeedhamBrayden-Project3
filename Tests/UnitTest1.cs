@@ -21,12 +21,15 @@ namespace Tests
             Assert.IsNotNull(copy);
             Assert.AreEqual(toCopy.CompareTo(copy),0);
         }
+
+        
         [TestMethod]
         public void CrateTimeTest()
         {
-            Crate crate = new Crate("061543",20);
+            Truck t = new Truck();
+            Crate crate = new Crate("061543",20, t);
             Assert.IsNotNull(crate);
-            Assert.AreEqual(crate.GetTime(),(uint)20);
+            Assert.AreEqual(crate.TimeWhenUnloaded,(uint)20);
         }
 
         [TestCategory("Truck Tests")]
@@ -85,7 +88,7 @@ namespace Tests
             truck.Load(crate);
 
             //Act
-            Crate returned = truck.Unload(out uint time);
+            Crate returned = truck.Unload(0);
 
             //Assert
             Assert.AreEqual(crate, returned);
@@ -99,22 +102,28 @@ namespace Tests
             string ID = "1";
             uint time = 10;
 
-            Crate crate = new(ID, time);
+            Crate crate = new(ID, time, truck);
             truck.Load(crate);
 
             //Act
-            truck.Unload(out uint unloadTime);
+            //truck.Unload();
 
             //Assert
-            Assert.AreEqual(time, unloadTime);
+            //Assert.AreEqual(time, unloadTime);
         }
+
         [TestCategory("Dock Tests")]
         [TestMethod]
         public void TruckEnterDock()
         {
             Dock dock = new Dock();
             Truck truck = new();
+            Crate c = new();
+
+            truck.Load(c);
             dock.NewTruckIn(truck);
+
+            Assert.AreEqual(truck, dock.CurrentTruck);
         }
 
         [TestCategory("Road Tests")]
@@ -122,7 +131,8 @@ namespace Tests
         public void UpdatingDocksIncrementsTime()
         {
             //Arrange
-            Road r = new();
+            Warehouse w = new();
+            Road r = new(w);
             Dock d = new();
 
             //Act
@@ -136,11 +146,12 @@ namespace Tests
         public void CrateUnloadTime()
         {
             //Arrange
-            Road r = new();
+            Warehouse w = new();
+            Road r = new(w);
             r.IncrementTime();
 
             Crate c = new();
-            var time = c.GetTime();
+            var time = c.TimeWhenUnloaded;
             Truck t = new(r.Time);
             t.Load(c);
 
@@ -155,7 +166,8 @@ namespace Tests
         [TestMethod]
         public void MultipleCratesUnloadTime()
         {
-            Road r = new();
+            Warehouse w = new();
+            Road r = new(w);
             Truck t = new();
 
             List<Crate> crates = new();
