@@ -15,12 +15,13 @@ using System.Threading.Tasks;
 **********************************************************************/
 namespace _2210_NeedhamBrayden_Project3
 {
-    internal class Warehouse
+    public class Warehouse
     {
         public List<Dock> Docks { get; set; }
         public Queue<Truck> Entrance { get; set; }
 
-        public Warehouse() 
+
+        public Warehouse()
         {
             Docks = new List<Dock>();
             Entrance = new Queue<Truck>();
@@ -34,7 +35,7 @@ namespace _2210_NeedhamBrayden_Project3
             List<Crate> list = new();
 
             //we'll start out with 100 crates max for now, i'll email gillenwater to get a max 
-            Crate[] crates = new Crate[rnd.Next(1, 100)]; 
+            Crate[] crates = new Crate[rnd.Next(1, 100)];
             for (int i = 0; i < crates.Length; i++)
             {
                 crates[i] = new Crate($"C{i}");
@@ -54,7 +55,28 @@ namespace _2210_NeedhamBrayden_Project3
                 //I'll find out how to implement the time increments soon, just sending this in to save it
             }
         }
+        //In here we need to Assign Trucks in the entrance to each dock as they become available
+        public void AssignTruckToDock()
+        {
+            bool emptyDockFound = false;
+            int currentDock = 0;
+            while (emptyDockFound != true)
+            {
+                if (Docks[currentDock].CurrentTruck == null)
+                {
+                    emptyDockFound = true;
+                    Docks[currentDock].NewTruckIn(Entrance.Dequeue());
+                }
+            }
+        }
+        public void AddToEntrance(Queue<Truck> trucksFromRoad)
+        {
+            for (int i = 0; i < trucksFromRoad.Count; i++)
+            {
+                Entrance.Enqueue(trucksFromRoad.Dequeue());
+            }
+        }
     }
 
-    
+
 }

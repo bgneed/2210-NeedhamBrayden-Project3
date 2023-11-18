@@ -17,11 +17,11 @@ namespace _2210_NeedhamBrayden_Project3
 {
     public class Crate : IComparable<Crate>
     {
-        public string IdNumber {  get; set; }
-        public double Price { get; set; }  
+        public string IdNumber { get; set; }
+        public double Price { get; set; }
         public uint TimeWhenUnloaded { get; set; }
 
-        public Crate() 
+        public Crate()
         {
             IdNumber = "0";
             Price = 0;
@@ -72,7 +72,7 @@ namespace _2210_NeedhamBrayden_Project3
         public int CompareTo(Crate crate)
         {
             int result = -1;
-            if(crate.IdNumber == IdNumber && crate.Price == Price && crate.TimeWhenUnloaded == TimeWhenUnloaded)
+            if (crate.IdNumber == IdNumber && crate.Price == Price && crate.TimeWhenUnloaded == TimeWhenUnloaded)
             {
                 result = 0;
             }

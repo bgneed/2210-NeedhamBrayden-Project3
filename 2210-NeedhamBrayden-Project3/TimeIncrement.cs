@@ -75,5 +75,10 @@ namespace _2210_NeedhamBrayden_Project3
                 throw new Exception("Invalid Time Increment");
             }
         }
+
+        public static void Reset()
+        {
+            Increment = 0;
+        }
     }
 }

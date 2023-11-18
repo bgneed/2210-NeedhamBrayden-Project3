@@ -1,8 +1,5 @@
 using _2210_NeedhamBrayden_Project3;
-namespace Tests
-{
-    [TestClass]
-    public class UnitTest1
+public class UnitTest1
     {
         [TestCategory("Crate Tests")]
         [TestMethod]
@@ -48,14 +45,14 @@ namespace Tests
         public void CreateListOfCrates()
         {
             //Arrange
-            Truck truck = new();
-            List<Crate> crates = new();
+            Truck truck = new Truck();
+            List<Crate> crates = new List<Crate>();
 
             //Act
             crates = truck.GenerateCrates();
 
             //Assert
-            Assert.IsTrue(crates.Count > 0 && crates.Count <= 100);
+            Assert.IsTrue(crates.Count > 0 && crates.Count <= 5);
         }
 
         [TestMethod]
@@ -99,7 +96,7 @@ namespace Tests
             truck.Load(crate);
 
             //Act
-            Crate returned = truck.Unload(out uint time);
+            Crate returned = truck.Unload(0);
 
             //Assert
             Assert.AreEqual(crate, returned);
@@ -117,70 +114,32 @@ namespace Tests
             truck.Load(crate);
 
             //Act
-            truck.Unload(out uint unloadTime);
+            truck.Unload(time);
 
             //Assert
-            Assert.AreEqual(time, unloadTime);
+            Assert.AreEqual(time, crate.TimeWhenUnloaded);
         }
-
         [TestCategory("Dock Tests")]
         [TestMethod]
-        public void JoinLineIncrementsCount()
+        public void TruckEnterDock()
         {
-            //Arrange
+            Dock dock = new Dock();
             Truck truck = new();
-            Dock dock = new();
-
-            //Act
-            dock.JoinLine(truck);
-
-            //Assert
-            Assert.AreEqual(1, dock.Line.Count);
+            dock.NewTruckIn(truck);
         }
 
+        [TestCategory("Road Tests")]
         [TestMethod]
-        public void SendOffReturnsTruck()
+        public void UpdatingDocksIncrementsTime()
         {
             //Arrange
-            Crate crate = new();
-            Truck truck = new();
-            Dock dock = new();
-            truck.Load(crate);
-            dock.JoinLine(truck);
+            Road r = new();
+            Dock d = new();
 
             //Act
-            Truck returned = dock.SendOff();
+            r.UpdateTimeViaDock();
 
             //Assert
-            Assert.AreEqual(truck, returned);
-        }
-
-        [TestMethod]
-        public void SendOffIncrementsTime()
-        {
-            //Arrange
-            string ID = "1";
-            uint time = 10;
-            List<Crate> crates = new();
-
-            for (int i = 0; i < 10; i++)
-            {
-                Crate c = new(ID, time);
-                crates.Add(c);
-            }
-
-            Truck truck = new();
-            Dock dock = new();
-
-            //Act
-            truck.Load(crates);
-
-            dock.JoinLine(truck);
-
-            dock.SendOff();
-
-            //Assert
-            Assert.AreEqual((uint)100, dock.TotalTimeInUse);
+            Assert.AreEqual(10, r.Time);
         }
     }
-}

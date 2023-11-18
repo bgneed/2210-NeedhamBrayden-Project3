@@ -17,7 +17,7 @@ namespace _2210_NeedhamBrayden_Project3
 {
     public class Truck
     {
-        public string Driver {  get; set; }
+        public string Driver { get; set; }
 
         public string DeliveryCompany { get; set; }
 
@@ -27,7 +27,7 @@ namespace _2210_NeedhamBrayden_Project3
 
         public Truck(uint arrivalTime)
         {
-            Driver = AssignDriver(); 
+            Driver = AssignDriver();
             DeliveryCompany = AssignCompany();
             ArrivalTime = arrivalTime;
             Trailer = new Stack<Crate>();
@@ -68,7 +68,7 @@ namespace _2210_NeedhamBrayden_Project3
         public List<Crate> GenerateCrates()
         {
             Random r = new Random();
-            int numOfCrates = r.Next(0, 101);
+            int numOfCrates = r.Next(0, 6);
 
             List<Crate> listOfCrates = new List<Crate>();
 
@@ -86,10 +86,10 @@ namespace _2210_NeedhamBrayden_Project3
         /// A method to remove the last crate that was added to the trucks trailer
         /// </summary>
         /// <returns>The unloaded crate and the time the crate was unloaded</returns>
-        public Crate Unload(out uint unloadTime) //I've updated every instance of Unload() to include the out param - Jacob
+        public Crate Unload(uint unloadTime) //Changed unload time from an out variable to an in variable
         {
             Crate crate = Trailer.Pop();
-            unloadTime = crate.GetTime();
+            crate.TimeWhenUnloaded = unloadTime;
             return crate;
         }
 

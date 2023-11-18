@@ -20,6 +20,15 @@ namespace _2210_NeedhamBrayden_Project3
             //increment
             //Warehouse warehouse = new Warehouse();
             //warehouse.Run();
+
+            /****************** A Bit of Code For Unloading Crates
+            //foreach(Dock dock in Warehouse)
+            //{
+            //  if(dock.CurrentTruck.Trailer.Count > 1){Unload}
+            //  else if (dock.CurrentTruck.Trailer.Count == 1) {SendOff}
+            //}
+            */
+            StreamWriter csvOut = new StreamWriter(@"..\..\..\..\SimulationResults.csv");
         }
     }
 }
