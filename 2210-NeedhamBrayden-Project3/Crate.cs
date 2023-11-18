@@ -18,8 +18,8 @@ namespace _2210_NeedhamBrayden_Project3
     public class Crate : IComparable<Crate>
     {
         public string IdNumber {  get; set; }
-        public double Price { get; set; }  
-        public uint TimeWhenUnloaded { get; set; }
+        public double Price { get; set; }
+        public uint TimeWhenUnloaded;
         public string DriversName { get; set; }
         public string CompanyName { get; set; }
 
@@ -65,6 +65,16 @@ namespace _2210_NeedhamBrayden_Project3
                 result = 0;
             }
             return result;
+        }
+
+        public void SetTime(uint time)
+        {
+            TimeWhenUnloaded = time;
+        }
+
+        public uint GetTime()
+        {
+            return TimeWhenUnloaded;
         }
     }
 }

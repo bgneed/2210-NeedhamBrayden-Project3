@@ -197,5 +197,22 @@ namespace Tests
             Assert.AreEqual((uint)40, crates[4].TimeWhenUnloaded);
 
         }
+
+        [TestMethod]
+        public void TruckArrivalTime()
+        {
+            Warehouse w = new();
+            Road r = new(w);
+
+            for (int i = 0; i < 5;i++)
+            {
+                r.IncrementTime();
+            }
+
+            Truck t = new(r.Time);
+
+            Assert.AreEqual(t.ArrivalTime, (uint)50);
+            Assert.IsTrue(t.ArrivalTime == r.Time);
+        }
     }
 }
