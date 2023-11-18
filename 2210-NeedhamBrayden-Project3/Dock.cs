@@ -25,7 +25,7 @@ namespace _2210_NeedhamBrayden_Project3
         public List<Crate> Crates { get; set; }
         public Crate CurrentCrate { get; set; }
         public int TotalTrucks { get; set; }
-        public bool IsOpen {  get; private set; }
+        public bool OpenStatus {  get; private set; }
         public uint TotalTimeInUse { get; set; }
         public uint TimeNotInUse { get; set; }
         public Dock()
@@ -53,41 +53,76 @@ namespace _2210_NeedhamBrayden_Project3
             TotalTimeInUse = 0;
         }
         //Remove Crates from Current Truck : One per time increment
+        /// <summary>
+        /// A method that removes the next crate from the trailer of the truck. 
+        /// Updates the total # of crates unloaded into the dock, the total sales (the price of each crate combined),
+        /// as well as the total time in use of the dock.
+        /// </summary>
         public void RemoveCrate()
         {
             uint unloadTime = 0;    
-            CurrentCrate = CurrentTruck.Unload(out unloadTime);
+            CurrentCrate = CurrentTruck.Unload(unloadTime); //There will be a problem here
             TotalCrates++;
             TotalSales += CurrentCrate.Price;
-            TotalTimeInUse += unloadTime;
+            TotalTimeInUse += 10;
         }
         //Change trucks that are in the dock at the time: Remove Crate and Send Truck off in one increment
         //then on the next increment Bring new truck in and remove a crate 
-        public void SendOff()
+        /// <summary>
+        /// A private method that will send the current truck off so that a new one can come in and be unloaded. 
+        /// The method unloads the final crate and sends the truck off in one time increment. 
+        /// </summary>
+        private void SendOff()
         {
             //This should only happen when there is one crate left in the truck
             RemoveCrate();
             CurrentTruck = null;
         }
+        /// <summary>
+        /// A method for bringing a new truck into the dock. 
+        /// In this method we bring in a new truck by copying the reference to the truck that is passed in, then unload one crate
+        /// from the truck, all in one time increment. 
+        /// </summary>
+        /// <param name="newTruck"></param>
         public void NewTruckIn(Truck newTruck)
         {
             CurrentTruck = newTruck;
             RemoveCrate();
         }
-        public void UpdateDock(Queue<Truck> Entrance, uint time)
+        /// <summary>
+        /// ---------TLDR; This method updates the status of the truck by either removing a crate and sending the truck off, remvoing a crate
+        /// and then returning, or bringing in a new truck.------------
+        /// If the truck is not null, then it is checked for how many crates it has. There is an exception that can be thrown if 
+        /// there is a truck that is not null, and has zero crates, this is an illegal case thus, the exception is thrown. 
+        /// If the truck is not null and has exactly one crate, the send off method is run, else if there is mor ethan one then it
+        /// will simply unload a crate and return.
+        /// If there is no truck in the dock then it will bring in the next truck
+        /// 
+        /// Method returns 1 if a crate was unloaded and there was no change in the CurrentTruck,
+        ///  returns 2 if a crate was unloaded and a truck sent off, and
+        ///  returns 3 if a new truck is taken in
+        /// </summary>
+        /// <param name="Entrance"></param>
+        /// <param name="time"></param>
+        /// <exception cref="Exception"></exception>
+        public void UpdateDock(Queue<Truck> Entrance, uint time,out int whatEventOcurred)
         {
             //Check if truck in this dock == null
-            if(CurrentTruck != null) 
+            if (CurrentTruck != null)
             {
                 //if not null then are there more than one crates to unload
-                if(CurrentTruck.Trailer.Count == 1) 
-                { 
+                if (CurrentTruck.Trailer.Count == 1)
+                {
                     SendOff();
+                    whatEventOcurred = 2;
+                    return;
                 }
                 //if no more than one crate then run send off. if more than one then run unload
-                else if(CurrentTruck.Trailer.Count > 1)
+                else if (CurrentTruck.Trailer.Count > 1)
                 {
-                    CurrentTruck.Unload(time); //Could be problems with this so please watch for them
+                    RemoveCrate();
+                    whatEventOcurred= 1;
+                    return;
                 }
                 else
                 //This should never happen as there should never be an instance in which CurrentTruck.Trailer.Count > 1 and truck != null
@@ -98,12 +133,27 @@ namespace _2210_NeedhamBrayden_Project3
             else
             {
                 //if truck in dock == null then run new truck in if dock is open
+                NewTruckIn(Entrance.Dequeue());
+                whatEventOcurred = 3;
+                return;
             }
-            
-
         }
-
-
+        /// <summary>
+        /// Sets the status of the dock to the input boolean. True for Open, False for Closed
+        /// </summary>
+        /// <param name="status"></param>
+        public void SetStatus(bool status)
+        {
+            OpenStatus = status;
+        }
+        /// <summary>
+        /// Returns the status of the dock, falso for closed, true for open
+        /// </summary>
+        /// <returns></returns>
+        public bool GetStatus()
+        {
+            return OpenStatus;
+        }
 
 
 

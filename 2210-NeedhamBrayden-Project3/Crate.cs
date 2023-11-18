@@ -20,6 +20,8 @@ namespace _2210_NeedhamBrayden_Project3
         public string IdNumber {  get; set; }
         public double Price { get; set; }  
         public uint TimeWhenUnloaded { get; set; }
+        public string DriversName { get; set; }
+        public string CompanyName { get; set; }
 
         public Crate() 
         {
@@ -34,34 +36,20 @@ namespace _2210_NeedhamBrayden_Project3
             double price = random.Next(50, 501);
             Price = price;
         }
-        public Crate(string idNumber, uint time)
+        public Crate(string idNumber, uint time, Truck truck)
         {
             IdNumber = idNumber;
+            DriversName = truck.Driver;
+            CompanyName = truck.DeliveryCompany;
             Random random = new Random();
             double price = random.Next(50, 501);
-            SetTime(time);
+            TimeWhenUnloaded = time;
             Price = price;
         }
         public Crate(Crate copyCrate)
         {
             IdNumber = copyCrate.IdNumber;
             Price = copyCrate.Price;
-        }
-        /// <summary>
-        /// A method that simply returns the time when the crate was unloaded
-        /// </summary>
-        /// <returns></returns>
-        public uint GetTime()
-        {
-            return TimeWhenUnloaded;
-        }
-        /// <summary>
-        /// A method that sets the unload time to the time that is input to the method
-        /// </summary>
-        /// <param name="time"></param>
-        public void SetTime(uint time)
-        {
-            TimeWhenUnloaded = time;
         }
         /// <summary>
         /// A method to compare two crates to each other. 

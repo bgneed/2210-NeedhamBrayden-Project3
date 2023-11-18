@@ -69,6 +69,11 @@ namespace _2210_NeedhamBrayden_Project3
                 }
             }
         }
+        /// <summary>
+        /// This method brings trucks that are on the road and brings them to the entrance of the warehouse so that they may
+        /// be sorted to each dock
+        /// </summary>
+        /// <param name="trucksFromRoad"></param>
         public void AddToEntrance(Queue<Truck> trucksFromRoad)
         {
             for(int i = 0; i < trucksFromRoad.Count;i++)

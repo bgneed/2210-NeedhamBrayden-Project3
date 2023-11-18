@@ -21,14 +21,32 @@ namespace _2210_NeedhamBrayden_Project3
             //Warehouse warehouse = new Warehouse();
             //warehouse.Run();
 
-            /****************** A Bit of Code For Unloading Crates
-            //foreach(Dock dock in Warehouse)
-            //{
-            //  if(dock.CurrentTruck.Trailer.Count > 1){Unload}
-            //  else if (dock.CurrentTruck.Trailer.Count == 1) {SendOff}
-            //}
-            */
             StreamWriter csvOut = new StreamWriter(@"..\..\..\..\SimulationResults.csv");
+
+            //What I would recommend doing is having a loop that goes through each dock and updates it and then writes to the file
+            //for each dock as they are updated.
+        }
+        /// <summary>
+        /// This method will write to the CSV file what 
+        /// </summary>
+        /// <param name="eventOcurred"></param>
+        public void WriteToFile(Truck truck, Crate crate, int eventOcurred, StreamWriter stream)
+        {
+            string scenario = "";
+            switch (eventOcurred)
+            {
+                case 1:
+                scenario = "A crate was unloaded, but the truck still has more crates to unload.";
+                break;
+                case 2:
+                scenario = "A crate was unloaded, and the truck was sent off.";
+                break;
+                case 3:
+                scenario = "A new truck entered the dock, and a crate was unloaded.";
+                break;
+            }
+            stream.WriteLine($"Unload Time: {crate.TimeWhenUnloaded}, Trucker: {crate.DriversName}, Company: {crate.CompanyName}" +
+                $", ID Num: {crate.IdNumber}, Price of Crate: {crate.Price}, Scenario: {scenario}");
         }
     }
 }

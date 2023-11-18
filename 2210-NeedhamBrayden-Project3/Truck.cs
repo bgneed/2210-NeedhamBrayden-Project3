@@ -75,7 +75,7 @@ namespace _2210_NeedhamBrayden_Project3
             for (int i = 0; i <= numOfCrates; i++)
             {
                 string crateID = "C" + $"{i}";
-                Crate crate = new Crate(crateID);
+                Crate crate = new Crate(crateID);//Add time into here as well as pass in the truck object itself if possible
                 listOfCrates.Add(crate);
             }
 
