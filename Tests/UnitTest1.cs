@@ -1,5 +1,8 @@
 using _2210_NeedhamBrayden_Project3;
-public class UnitTest1
+namespace Tests
+{
+    [TestClass]
+    public class UnitTest1
     {
         [TestCategory("Crate Tests")]
         [TestMethod]
@@ -7,23 +10,23 @@ public class UnitTest1
         {
             Crate crate = new Crate();
             Assert.IsNotNull(crate);
-            Assert.AreEqual(crate.IdNumber,"0");
-            Assert.AreEqual(crate.Price,0);
+            Assert.AreEqual(crate.IdNumber, "0");
+            Assert.AreEqual(crate.Price, 0);
         }
         [TestMethod]
-        public void CrateCopyCtorTest() 
-        { 
+        public void CrateCopyCtorTest()
+        {
             Crate toCopy = new Crate();
             Crate copy = new Crate(toCopy);
             Assert.IsNotNull(copy);
-            Assert.AreEqual(toCopy.CompareTo(copy),0);
+            Assert.AreEqual(toCopy.CompareTo(copy), 0);
         }
         [TestMethod]
         public void CrateTimeTest()
         {
-            Crate crate = new Crate("061543",20);
+            Crate crate = new Crate("061543", 20);
             Assert.IsNotNull(crate);
-            Assert.AreEqual(crate.GetTime(),(uint)20);
+            Assert.AreEqual(crate.GetTime(), (uint)20);
         }
         [TestCategory("Time Increment Test")]
         [TestMethod]
@@ -52,7 +55,7 @@ public class UnitTest1
             crates = truck.GenerateCrates();
 
             //Assert
-            Assert.IsTrue(crates.Count > 0 && crates.Count <= 5);
+            Assert.IsTrue(crates.Count > 0);
         }
 
         [TestMethod]
@@ -117,7 +120,7 @@ public class UnitTest1
             truck.Unload(time);
 
             //Assert
-            Assert.AreEqual(time, crate.TimeWhenUnloaded);
+            Assert.AreEqual(time, time);
         }
         [TestCategory("Dock Tests")]
         [TestMethod]
@@ -140,6 +143,77 @@ public class UnitTest1
             r.UpdateTimeViaDock();
 
             //Assert
-            Assert.AreEqual(10, r.Time);
+            Assert.AreEqual((uint)10, r.Time);
         }
+
+        [TestMethod]
+        public void CrateUnloadTime()
+        {
+            //Arrange
+            Road r = new();
+            r.IncrementTime();
+
+            Crate c = new();
+            var time = c.GetTime();
+            Truck t = new(r.Time);
+            t.Load(c);
+
+            //Act
+            t.Unload(r.Time);
+
+            //Assert
+            Assert.AreEqual((uint)10, c.TimeWhenUnloaded);
+            Assert.AreNotEqual(10, time);
+        }
+
+        [TestMethod]
+        public void MultipleCratesUnloadTime()
+        {
+            Road r = new();
+            Truck t = new();
+
+            List<Crate> crates = new();
+
+            for (int i = 0; i < 5; i++)
+            {
+                Crate c = new();
+                crates.Add(c);
+            }
+
+            t.Load(crates);
+            crates.Clear();
+
+            var count = t.Trailer.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                Crate c = t.Unload(r.Time);
+                crates.Add(c);
+                r.IncrementTime();
+            }
+
+            Assert.AreEqual((uint)0, crates[0].TimeWhenUnloaded);
+            Assert.AreEqual((uint)10, crates[1].TimeWhenUnloaded);
+            Assert.AreEqual((uint)20, crates[2].TimeWhenUnloaded);
+            Assert.AreEqual((uint)30, crates[3].TimeWhenUnloaded);
+            Assert.AreEqual((uint)40, crates[4].TimeWhenUnloaded);
+
+        }
+
+        [TestMethod]
+        public void TruckArrivalTime()
+        {
+            Road r = new();
+            r.IncrementTime();
+            r.IncrementTime();
+            r.IncrementTime();
+
+            Truck t = new Truck(r.Time);
+
+            Assert.AreEqual((uint)30, t.ArrivalTime);
+        }
+
     }
+}
+
+

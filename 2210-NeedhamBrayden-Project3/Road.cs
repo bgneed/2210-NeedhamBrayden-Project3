@@ -33,6 +33,7 @@ namespace _2210_NeedhamBrayden_Project3
             WaitLine = new Queue<Truck>();
             Likelihood = 0;
             Time = 0;
+            Warehouse = new Warehouse();
         }
         public void AddToWaitLine()
         {

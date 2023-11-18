@@ -86,10 +86,10 @@ namespace _2210_NeedhamBrayden_Project3
         /// A method to remove the last crate that was added to the trucks trailer
         /// </summary>
         /// <returns>The unloaded crate and the time the crate was unloaded</returns>
-        public Crate Unload(uint unloadTime) //Changed unload time from an out variable to an in variable
+        public Crate Unload(uint unloadTime) 
         {
             Crate crate = Trailer.Pop();
-            crate.TimeWhenUnloaded = unloadTime;
+            crate.SetTime(unloadTime);
             return crate;
         }
 

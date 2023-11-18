@@ -19,12 +19,13 @@ namespace _2210_NeedhamBrayden_Project3
     {
         public string IdNumber { get; set; }
         public double Price { get; set; }
-        public uint TimeWhenUnloaded { get; set; }
+        public uint TimeWhenUnloaded;
 
         public Crate()
         {
             IdNumber = "0";
             Price = 0;
+            TimeWhenUnloaded = 0;
         }
         //Doing this so that I can keep track of the IdNumbers and make sure each crate has a unique one
         public Crate(string idNumber)
