@@ -19,49 +19,136 @@ namespace _2210_NeedhamBrayden_Project3
     {
         //Truck creation will take place here and will then feed into the warehouses Queue at the entrance
         public Queue<Truck> WaitLine;
+
+        private int Likelihood;
+
+        public Warehouse Warehouse;
+
+        public uint Time;
         //Also crate creation will take place inside of the truck creation and a random Id number will be given to each crate that will then
         //be tracked here to make sure each crate is unique and has a different number than every other crate
-        public Road()
+        public Road(Warehouse warehouse)
         {
             WaitLine = new Queue<Truck>();
+            Likelihood = 0;
+            Time = 0;
+            Warehouse = warehouse;
         }
+
         public void AddToWaitLine()
         {
-            ////This will add trucks to the waitline based on the time of day
-            //if(TimeIncrement.GetIncrement() == "Early Morning")
-            //{
-            //    //up to 5 trucks will come during this time frame
-            //}
-            //else if (TimeIncrement.GetIncrement() == "Morning")
-            //{
-            //    //up to 3 trucks will come during this time frame
-            //}
-            //else if (TimeIncrement.GetIncrement() == "Midday")
-            //{
-            //    //up to 5 trucks will come during this time frame
-            //}
-            //else if (TimeIncrement.GetIncrement() == "Pre Noon")
-            //{
-            //    //up to 6 trucks will come during this time frame
-            //}
-            //else if (TimeIncrement.GetIncrement() == "Noon")
-            //{
-            //    //up to 10 trucks will come during this time frame
-            //}
-            //else if (TimeIncrement.GetIncrement() == "After Noon")
-            //{
-            //    //up to 4 trucks will come during this time frame
-            //}
-            //else if (TimeIncrement.GetIncrement() == "Evening")
-            //{
-            //    //up to 3 trucks
-            //}
-            //else if (TimeIncrement.GetIncrement() == "End of Day")
-            //{
-            //    //up to 2 trucks
-            //}
+            //This will add trucks to the waitline based on the time of day
+            if (GetTimeFrame() == "Early Morning")
+            {
+                Likelihood = 5;
+                QueueTrucks();
+            }
+            else if (GetTimeFrame() == "Morning")
+            {
+                Likelihood = 3;
+                QueueTrucks();
+            }
+            else if (GetTimeFrame() == "Midday")
+            {
+                Likelihood = 5;
+                QueueTrucks();
+            }
+            else if (GetTimeFrame() == "Pre Noon")
+            {
+                Likelihood = 6;
+                QueueTrucks();
+            }
+            else if (GetTimeFrame() == "Noon")
+            {
+                Likelihood = 10;
+                QueueTrucks();
+            }
+            else if (GetTimeFrame() == "After Noon")
+            {
+                Likelihood = 4;
+                QueueTrucks();
+            }
+            else if (GetTimeFrame() == "Evening")
+            {
+                Likelihood = 3;
+                QueueTrucks();
+            }
+            else if (GetTimeFrame() == "End of Day")
+            {
+                Likelihood = 2;
+                QueueTrucks();
+            }
         }
         //Earlier time increments will be slower with truck creation. Mid time increments will be a lot more full
         //late time increments will be slower as well
+
+        public void QueueTrucks()
+        {
+            for (int i = 0; i <= Likelihood; i++)
+            {
+                Truck truck = new();
+                WaitLine.Enqueue(truck);
+            }
+        }
+
+        public string GetTimeFrame()
+        {
+            if (Time <= 60)
+            {
+                return "Early Morning";
+            }
+            else if (Time >= 70 && Time <= 120)
+            {
+                return "Morning";
+            }
+            else if (Time >= 130 && Time <= 190)
+            {
+                return "Midday";
+            }
+            else if (Time >= 200 && Time <= 260)
+            {
+                return "Pre Noon";
+            }
+            else if (Time >= 270 && Time <= 320)
+            {
+                return "Noon";
+            }
+            else if (Time >= 330 && Time <= 390)
+            {
+                return "After Noon";
+            }
+            else if (Time >= 400 && Time <= 480)
+            {
+                return "Evening";
+            }
+            else if (Time >= 480)
+            {
+                return "End of Day";
+            }
+            else
+            {
+                throw new Exception("Invalid Time Increment");
+            }
+        }
+
+        public void IncrementTime()
+        {
+            Time += 10;
+        }
+
+        public void ResetTime()
+        {
+            Time = 0;
+        }
+
+        public void UpdateTimeViaDock()
+        {
+            int i;
+            foreach (Dock d in Warehouse.Docks)
+            {
+                d.UpdateDock(Warehouse.Entrance, Time, out i);
+            }
+            IncrementTime();
+        }
     }
 }

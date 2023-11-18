@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 **********************************************************************/
 namespace _2210_NeedhamBrayden_Project3
 {
-    internal class Warehouse
+    public class Warehouse
     {
         public List<Dock> Docks { get; set; }
         public Queue<Truck> Entrance { get; set; }

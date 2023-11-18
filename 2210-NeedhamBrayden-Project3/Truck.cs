@@ -21,7 +21,7 @@ namespace _2210_NeedhamBrayden_Project3
 
         public string DeliveryCompany { get; set; }
 
-        public uint ArrivalTime { get; set; }
+        public uint ArrivalTime;
 
         public Stack<Crate> Trailer { get; set; }
 
@@ -89,7 +89,7 @@ namespace _2210_NeedhamBrayden_Project3
         public Crate Unload(uint unloadTime) //Changed unload time from an out variable to an in variable
         {
             Crate crate = Trailer.Pop();
-            crate.TimeWhenUnloaded = unloadTime;
+            crate.SetTime(unloadTime);
             return crate;
         }
 
