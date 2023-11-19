@@ -17,11 +17,11 @@ namespace _2210_NeedhamBrayden_Project3
 {
     public class Crate : IComparable<Crate>
     {
-        public string IdNumber {  get; set; }
-        public double Price { get; set; }
-        public uint TimeWhenUnloaded;
-        public string DriversName { get; set; }
-        public string CompanyName { get; set; }
+         public string IdNumber {  get; set; } = string.Empty;
+         public double Price { get; set; }
+         public uint TimeWhenUnloaded;
+         public string DriversName { get; set; } = string.Empty;
+         public string CompanyName { get; set; } = string.Empty;
 
         public Crate() 
         {
