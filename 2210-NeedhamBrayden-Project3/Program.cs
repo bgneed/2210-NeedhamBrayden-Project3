@@ -25,6 +25,12 @@ namespace _2210_NeedhamBrayden_Project3
 
             //What I would recommend doing is having a loop that goes through each dock and updates it and then writes to the file
             //for each dock as they are updated.
+            Warehouse warehouse = new Warehouse();
+            Road entranceRoad = new Road(warehouse);
+            foreach(Dock dock in entranceRoad.Warehouse.Docks)
+            {
+
+            }
         }
         /// <summary>
         /// This method will write to the CSV file what 

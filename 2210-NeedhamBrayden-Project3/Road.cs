@@ -34,7 +34,34 @@ namespace _2210_NeedhamBrayden_Project3
             Time = 0;
             Warehouse = warehouse;
         }
-
+        public void Initialize(int numOfDocks)
+        {
+            Warehouse.Docks  = new List<Dock>();
+            for(int i = 0; i <= numOfDocks; i++) 
+            {
+                Dock newDock = new Dock();
+                newDock.OpenStatus = true;
+                Warehouse.Docks.Add(newDock);
+            }
+            AddToWaitLine();
+            SendToEntrance();
+            foreach(Truck truck in Warehouse.Entrance)
+            {
+                Warehouse.AssignTruckToDock();
+            }
+        }
+        #region Jacob Code
+        public void SendToEntrance()
+        {
+            foreach (Truck truck in WaitLine)
+            {
+                Warehouse.Entrance.Enqueue(truck);
+            }
+            foreach (Truck truck1 in Warehouse.Entrance)
+            {
+                Warehouse.AssignTruckToDock();
+            }
+        }
         public void AddToWaitLine()
         {
             //This will add trucks to the waitline based on the time of day
@@ -150,5 +177,6 @@ namespace _2210_NeedhamBrayden_Project3
             }
             IncrementTime();
         }
+        #endregion
     }
 }

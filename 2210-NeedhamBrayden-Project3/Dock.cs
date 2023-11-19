@@ -25,7 +25,7 @@ namespace _2210_NeedhamBrayden_Project3
         public List<Crate> Crates { get; set; }
         public Crate CurrentCrate { get; set; }
         public int TotalTrucks { get; set; }
-        public bool OpenStatus {  get; private set; }
+        public bool OpenStatus {  get; set; }
         public uint TotalTimeInUse { get; set; }
         public uint TimeNotInUse { get; set; }
         public Dock()
@@ -137,22 +137,6 @@ namespace _2210_NeedhamBrayden_Project3
                 whatEventOcurred = 3;
                 return;
             }
-        }
-        /// <summary>
-        /// Sets the status of the dock to the input boolean. True for Open, False for Closed
-        /// </summary>
-        /// <param name="status"></param>
-        public void SetStatus(bool status)
-        {
-            OpenStatus = status;
-        }
-        /// <summary>
-        /// Returns the status of the dock, falso for closed, true for open
-        /// </summary>
-        /// <returns></returns>
-        public bool GetStatus()
-        {
-            return OpenStatus;
         }
 
 
