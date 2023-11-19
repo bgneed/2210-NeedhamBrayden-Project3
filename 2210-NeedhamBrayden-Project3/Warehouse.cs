@@ -63,14 +63,13 @@ namespace _2210_NeedhamBrayden_Project3
         {
             bool emptyDockFound = false;
             int currentDock = 0;
-            while (emptyDockFound != true) 
+            for(int i = 0; i < Docks.Count; i++)
             {
                 if (Docks[currentDock].CurrentTruck == null)
                 {
                     emptyDockFound = true;
                     Docks[currentDock].NewTruckIn(Entrance.Dequeue());
                 }
-                currentDock++;
             }
         }
         /// <summary>

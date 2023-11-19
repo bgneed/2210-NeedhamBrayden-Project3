@@ -27,10 +27,8 @@ namespace _2210_NeedhamBrayden_Project3
             //for each dock as they are updated.
             Warehouse warehouse = new Warehouse();
             Road entranceRoad = new Road(warehouse);
-            foreach(Dock dock in entranceRoad.Warehouse.Docks)
-            {
-
-            }
+            int numOfDocks = 5; //We can update this as needed
+            entranceRoad.Initialize(numOfDocks);
         }
         /// <summary>
         /// This method will write to the CSV file what 

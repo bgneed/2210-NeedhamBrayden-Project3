@@ -30,7 +30,7 @@ namespace _2210_NeedhamBrayden_Project3
         public uint TimeNotInUse { get; set; }
         public Dock()
         {
-            IdNumber = "C0";
+            IdNumber = "00";
             //Line = new Queue<Truck>();
             CurrentTruck = new Truck();
             CurrentCrate = new Crate();

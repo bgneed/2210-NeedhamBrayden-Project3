@@ -39,7 +39,7 @@ namespace _2210_NeedhamBrayden_Project3
             Warehouse.Docks  = new List<Dock>();
             for(int i = 0; i <= numOfDocks; i++) 
             {
-                Dock newDock = new Dock();
+                Dock newDock = new Dock("0"+ i);
                 newDock.OpenStatus = true;
                 Warehouse.Docks.Add(newDock);
             }
@@ -53,11 +53,11 @@ namespace _2210_NeedhamBrayden_Project3
         #region Jacob Code
         public void SendToEntrance()
         {
-            foreach (Truck truck in WaitLine)
+            for(int i = 0; i < WaitLine.Count; i++)
             {
-                Warehouse.Entrance.Enqueue(truck);
+                Warehouse.Entrance.Enqueue(WaitLine.Dequeue());
             }
-            foreach (Truck truck1 in Warehouse.Entrance)
+            for(int i = 0; i < Warehouse.Entrance.Count; i++)
             {
                 Warehouse.AssignTruckToDock();
             }
@@ -113,7 +113,7 @@ namespace _2210_NeedhamBrayden_Project3
         {
             for (int i = 0; i <= Likelihood; i++)
             {
-                Truck truck = new();
+                Truck truck = new(Time);
                 WaitLine.Enqueue(truck);
             }
         }
