@@ -24,7 +24,7 @@ namespace _2210_NeedhamBrayden_Project3
 
         public Warehouse Warehouse;
 
-        public uint Time;
+        public uint Time {  get; private set; }
         //Also crate creation will take place inside of the truck creation and a random Id number will be given to each crate that will then
         //be tracked here to make sure each crate is unique and has a different number than every other crate
         public Road(Warehouse warehouse)
@@ -47,7 +47,7 @@ namespace _2210_NeedhamBrayden_Project3
             SendToEntrance();
             foreach(Truck truck in Warehouse.Entrance)
             {
-                Warehouse.AssignTruckToDock();
+                Warehouse.AssignTruckToDock(Time);
             }
         }
         #region Jacob Code
@@ -59,7 +59,7 @@ namespace _2210_NeedhamBrayden_Project3
             }
             for(int i = 0; i < Warehouse.Entrance.Count; i++)
             {
-                Warehouse.AssignTruckToDock();
+                Warehouse.AssignTruckToDock(Time);
             }
         }
         public void AddToWaitLine()
@@ -148,7 +148,7 @@ namespace _2210_NeedhamBrayden_Project3
             {
                 return "Evening";
             }
-            else if (Time >= 480)
+            else if (Time > 480)
             {
                 return "End of Day";
             }
@@ -168,15 +168,15 @@ namespace _2210_NeedhamBrayden_Project3
             Time = 0;
         }
 
-        public void UpdateTimeViaDock()
-        {
-            int i;
-            foreach (Dock d in Warehouse.Docks)
-            {
-                d.UpdateDock(Warehouse.Entrance, Time, out i);
-            }
-            IncrementTime();
-        }
+        //public void UpdateTimeViaDock()
+        //{
+        //    int i;
+        //    foreach (Dock d in Warehouse.Docks)
+        //    {
+        //        d.UpdateDock(Warehouse.Entrance, Time, out i);
+        //    }
+        //    IncrementTime();
+        //}
         #endregion
     }
 }

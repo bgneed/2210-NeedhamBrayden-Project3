@@ -29,12 +29,21 @@ namespace _2210_NeedhamBrayden_Project3
             Road entranceRoad = new Road(warehouse);
             int numOfDocks = 5; //We can update this as needed
             entranceRoad.Initialize(numOfDocks);
+            while(entranceRoad.GetTimeFrame() != "End of Day")
+            {
+                foreach(Dock dock in warehouse.Docks)
+                {
+                    int eventOcurred = 0;
+                    dock.UpdateDock(warehouse.Entrance,entranceRoad.Time,out eventOcurred);
+                    WriteToFile(dock.CurrentCrate,eventOcurred,csvOut);
+                }
+            }
         }
         /// <summary>
         /// This method will write to the CSV file what 
         /// </summary>
         /// <param name="eventOcurred"></param>
-        public void WriteToFile(Truck truck, Crate crate, int eventOcurred, StreamWriter stream)
+        public static void WriteToFile(Crate crate, int eventOcurred, StreamWriter stream)
         {
             string scenario = "";
             switch (eventOcurred)

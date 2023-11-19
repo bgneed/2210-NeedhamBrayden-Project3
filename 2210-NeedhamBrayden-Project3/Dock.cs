@@ -18,7 +18,6 @@ namespace _2210_NeedhamBrayden_Project3
     public class Dock
     {
         public string IdNumber {  get; set; }
-        //public Queue<Truck> Line { get; set; }
         public Truck? CurrentTruck { get; private set; }
         public double TotalSales { get; set; }
         public int TotalCrates { get; set; }
@@ -31,9 +30,8 @@ namespace _2210_NeedhamBrayden_Project3
         public Dock()
         {
             IdNumber = "00";
-            //Line = new Queue<Truck>();
-            CurrentTruck = new Truck();
-            CurrentCrate = new Crate();
+            CurrentTruck = null;
+            CurrentCrate = null;
             TotalCrates = 0;
             TotalTrucks = 0;
             TimeNotInUse = 0;
@@ -43,9 +41,8 @@ namespace _2210_NeedhamBrayden_Project3
         public Dock(string idNum)
         {
             IdNumber = idNum;
-            //Line = new Queue<Truck>();
-            CurrentTruck = new Truck();
-            CurrentCrate = new Crate();
+            CurrentTruck = null;
+            CurrentCrate = null;
             TotalCrates = 0;
             TotalTrucks = 0;
             TimeNotInUse = 0;
@@ -58,9 +55,9 @@ namespace _2210_NeedhamBrayden_Project3
         /// Updates the total # of crates unloaded into the dock, the total sales (the price of each crate combined),
         /// as well as the total time in use of the dock.
         /// </summary>
-        public void RemoveCrate()
+        public void RemoveCrate(uint unloadTime)
         {
-            uint unloadTime = 0;    
+            //uint unloadTime = 0;    
             CurrentCrate = CurrentTruck.Unload(unloadTime); //There will be a problem here
             TotalCrates++;
             TotalSales += CurrentCrate.Price;
@@ -72,10 +69,10 @@ namespace _2210_NeedhamBrayden_Project3
         /// A private method that will send the current truck off so that a new one can come in and be unloaded. 
         /// The method unloads the final crate and sends the truck off in one time increment. 
         /// </summary>
-        private void SendOff()
+        private void SendOff(uint time)
         {
             //This should only happen when there is one crate left in the truck
-            RemoveCrate();
+            RemoveCrate(time);
             CurrentTruck = null;
         }
         /// <summary>
@@ -84,10 +81,10 @@ namespace _2210_NeedhamBrayden_Project3
         /// from the truck, all in one time increment. 
         /// </summary>
         /// <param name="newTruck"></param>
-        public void NewTruckIn(Truck newTruck)
+        public void NewTruckIn(Truck newTruck,uint time)
         {
             CurrentTruck = newTruck;
-            RemoveCrate();
+            RemoveCrate(time);
         }
         /// <summary>
         /// ---------TLDR; This method updates the status of the truck by either removing a crate and sending the truck off, remvoing a crate
@@ -113,14 +110,14 @@ namespace _2210_NeedhamBrayden_Project3
                 //if not null then are there more than one crates to unload
                 if (CurrentTruck.Trailer.Count == 1)
                 {
-                    SendOff();
+                    SendOff(time);
                     whatEventOcurred = 2;
                     return;
                 }
                 //if no more than one crate then run send off. if more than one then run unload
                 else if (CurrentTruck.Trailer.Count > 1)
                 {
-                    RemoveCrate();
+                    RemoveCrate(time);
                     whatEventOcurred= 1;
                     return;
                 }
@@ -133,7 +130,7 @@ namespace _2210_NeedhamBrayden_Project3
             else
             {
                 //if truck in dock == null then run new truck in if dock is open
-                NewTruckIn(Entrance.Dequeue());
+                NewTruckIn(Entrance.Dequeue(), time);
                 whatEventOcurred = 3;
                 return;
             }

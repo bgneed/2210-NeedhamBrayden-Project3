@@ -28,22 +28,13 @@ namespace _2210_NeedhamBrayden_Project3
             IdNumber = "0";
             Price = 0;
         }
-        //Doing this so that I can keep track of the IdNumbers and make sure each crate has a unique one
-        public Crate(string idNumber)
-        {
-            IdNumber = idNumber;
-            Random random = new Random();
-            double price = random.Next(50, 501);
-            Price = price;
-        }
-        public Crate(string idNumber, uint time, Truck truck)
+        public Crate(string idNumber, Truck truck)
         {
             IdNumber = idNumber;
             DriversName = truck.Driver;
             CompanyName = truck.DeliveryCompany;
             Random random = new Random();
             double price = random.Next(50, 501);
-            TimeWhenUnloaded = time;
             Price = price;
         }
         public Crate(Crate copyCrate)

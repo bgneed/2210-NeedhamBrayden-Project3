@@ -59,7 +59,7 @@ namespace _2210_NeedhamBrayden_Project3
         //}
         #endregion
         //In here we need to Assign Trucks in the entrance to each dock as they become available
-        public void AssignTruckToDock()
+        public void AssignTruckToDock(uint time)
         {
             bool emptyDockFound = false;
             int currentDock = 0;
@@ -68,7 +68,7 @@ namespace _2210_NeedhamBrayden_Project3
                 if (Docks[currentDock].CurrentTruck == null)
                 {
                     emptyDockFound = true;
-                    Docks[currentDock].NewTruckIn(Entrance.Dequeue());
+                    Docks[currentDock].NewTruckIn(Entrance.Dequeue(), time);
                 }
             }
         }
