@@ -37,7 +37,6 @@ namespace _2210_NeedhamBrayden_Project3
             csvOut = new StreamWriter(@"..\..\..\..\SimulationResults.csv");
         }
         
-        //In here we need to Assign Trucks in the entrance to each dock as they become available
         public void AssignTruckToDock(uint time)
         {
             bool emptyDockFound = false;
@@ -77,7 +76,7 @@ namespace _2210_NeedhamBrayden_Project3
         //increment
         public void Run()
         {
-            int numOfDocks = 10; //We can update this as needed
+            int numOfDocks = 12; //We can update this as needed
             Road.Initialize(numOfDocks);
             int totalNumOfTrucks = numOfDocks;
             int cratesUnloaded = 0;
