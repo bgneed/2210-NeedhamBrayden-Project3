@@ -39,7 +39,7 @@ namespace _2210_NeedhamBrayden_Project3
             Warehouse.Docks  = new List<Dock>();
             for(int i = 0; i < numOfDocks; i++) 
             {
-                Dock newDock = new Dock("0"+ i);
+                Dock newDock = new Dock("0"+ i+1);
                 newDock.OpenStatus = true;
                 Warehouse.Docks.Add(newDock);
             }
@@ -103,14 +103,18 @@ namespace _2210_NeedhamBrayden_Project3
             }
             else if (GetTimeFrame() == "End of Day")
             {
-                Likelihood = 4;
+                Likelihood = 0;
                 QueueTrucks();
             }
         }
         //Earlier time increments will be slower with truck creation. Mid time increments will be a lot more full
         //late time increments will be slower as well
 
-        
+        /// <summary>
+        /// This method will generate a number of trucks based on the likelihood value contained within this class
+        /// it will also use the time to pass into the truck constructor, and then it will enqueue each truck into the waitline of the 
+        /// road class. Uses a for loop to go through the amount of trucks needed to be generated
+        /// </summary>
         public void QueueTrucks()
         {
             Random randy = new Random();
@@ -122,7 +126,12 @@ namespace _2210_NeedhamBrayden_Project3
                 WaitLine.Enqueue(truck);
             }
         }
-
+        /// <summary>
+        /// This method will use the Time property of the road class to get the time of day that the simulation is currently in.
+        /// Returns a string based on the time of day and uses if statments to check what the time of day is
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public string GetTimeFrame()
         {
             if (Time <= 60)
@@ -153,7 +162,7 @@ namespace _2210_NeedhamBrayden_Project3
             {
                 return "Evening";
             }
-            else if (Time >= 480)
+            else if (Time > 480)
             {
                 return "End of Day";
             }
@@ -162,12 +171,16 @@ namespace _2210_NeedhamBrayden_Project3
                 throw new Exception("Invalid Time Increment");
             }
         }
-
+        /// <summary>
+        /// This method increments the time by one and adds it to the Time property
+        /// </summary>
         public void IncrementTime()
         {
             Time += 10;
         }
-
+        /// <summary>
+        /// This method resets the time property back to 0
+        /// </summary>
         public void ResetTime()
         {
             Time = 0;

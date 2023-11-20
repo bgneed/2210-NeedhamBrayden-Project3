@@ -21,7 +21,13 @@ namespace _2210_NeedhamBrayden_Project3
         public Queue<Truck> Entrance { get; set; }
         public Road Road { get; set; }
         public StreamWriter csvOut;
-
+        public Warehouse(int i)
+        {
+            Docks = new List<Dock>();
+            Entrance = new Queue<Truck>();
+            Road = new(this);
+            csvOut = new StreamWriter(@$"..\..\..\..\SimulationResults{i+1}.csv");
+        }
 
         public Warehouse() 
         {
@@ -71,7 +77,7 @@ namespace _2210_NeedhamBrayden_Project3
         //increment
         public void Run()
         {
-            int numOfDocks = 5; //We can update this as needed
+            int numOfDocks = 10; //We can update this as needed
             Road.Initialize(numOfDocks);
             int totalNumOfTrucks = numOfDocks;
             int cratesUnloaded = 0;
@@ -92,11 +98,13 @@ namespace _2210_NeedhamBrayden_Project3
                         {
                             totalNumOfTrucks++;
                         }
-
-                        totalRevenue += dock.CurrentCrate.Price;
-                        dock.OperatingCost += 100;
-                        cratesUnloaded++;
-                        WriteToFile(dock.CurrentCrate, eventOcurred, csvOut);
+                        else if (eventOcurred == 1 || eventOcurred == 2)
+                        {
+                            totalRevenue += dock.CurrentCrate.Price;
+                            dock.OperatingCost += 100;
+                            cratesUnloaded++;
+                            WriteToFile(dock.CurrentCrate, eventOcurred, csvOut);
+                        }
                     }
                     Road.IncrementTime();
 
@@ -112,7 +120,7 @@ namespace _2210_NeedhamBrayden_Project3
         }
 
         /// <summary>
-        /// This method will write to the CSV file what 
+        /// This method will write to the CSV file what ocurred in the dock in a time increment
         /// </summary>
         /// <param name="eventOcurred"></param>
         public static void WriteToFile(Crate crate, int eventOcurred, StreamWriter stream)
@@ -167,7 +175,7 @@ namespace _2210_NeedhamBrayden_Project3
             string dockRevenue = "\nRevenue for each dock: ";
             for (int i = 0; i < docks.Count; i++)
             {
-                double profit = Math.Round(docks[i].TotalSales / docks[i].OperatingCost, 2);
+                double profit = Math.Round(docks[i].TotalSales - docks[i].OperatingCost, 2);
                 dockRevenue += $"\nDock {i + 1}: ${profit}";
             }
             stream.WriteLine(dockRevenue);

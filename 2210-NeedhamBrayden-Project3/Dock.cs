@@ -145,33 +145,5 @@ namespace _2210_NeedhamBrayden_Project3
                 }
             }
         }
-
-
-
-
-
-
-
-        //public Truck SendOff()
-        //{
-        //    int count = CurrentTruck.Trailer.Count;
-
-        //    for (int i = 0; i < count; i++)
-        //    {
-        //        CurrentTruck.Unload(out uint unloadTime);
-        //        TotalCrates++;
-        //        TotalTimeInUse += unloadTime;
-        //    }
-
-        //    return CurrentTruck;
-        //}
-        //public Crate RemoveCrate()
-        //{
-        //    uint removalTime;
-        //    CurrentCrate = new Crate(CurrentTruck.Unload(out removalTime));
-        //    CurrentCrate.TimeWhenUnloaded = removalTime;
-        //    Crates.Add(CurrentCrate);
-        //    return CurrentCrate;
-        //}
     }
 }
