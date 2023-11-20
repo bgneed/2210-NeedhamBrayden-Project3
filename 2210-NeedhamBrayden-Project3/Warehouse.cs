@@ -48,7 +48,7 @@ namespace _2210_NeedhamBrayden_Project3
                 {
                     emptyDockFound = true;
 
-                    if (Entrance.Count == 0)
+                    while (Entrance.Count == 0)
                     {
                         Road.AddToWaitLine();
                         AddToEntrance(Road.WaitLine);
@@ -82,11 +82,13 @@ namespace _2210_NeedhamBrayden_Project3
             int totalNumOfTrucks = numOfDocks;
             int cratesUnloaded = 0;
             double totalRevenue = 0;
+            int longestLine = Entrance.Count;
 
             using (csvOut)
             {
                 while (Road.GetTimeFrame() != "End of Day")
                 {
+
                     foreach (Dock dock in Docks)
                     {
 
@@ -106,16 +108,23 @@ namespace _2210_NeedhamBrayden_Project3
                             WriteToFile(dock.CurrentCrate, eventOcurred, csvOut);
                         }
                     }
-                    Road.IncrementTime();
 
-                    if (Entrance.Count == 0)
+                    while (Entrance.Count == 0)
                     {
                         Road.AddToWaitLine();
                         AddToEntrance(Road.WaitLine);
                     }
+
+                    if (Entrance.Count  > longestLine)
+                    {
+                        longestLine = Entrance.Count;
+                    }
+
+                    Road.IncrementTime();
+
                 }
 
-                SumOfSimulation(csvOut, totalNumOfTrucks, Docks, cratesUnloaded, totalRevenue);
+                SumOfSimulation(csvOut, totalNumOfTrucks, Docks, cratesUnloaded, totalRevenue, longestLine);
             }
         }
 
@@ -150,10 +159,12 @@ namespace _2210_NeedhamBrayden_Project3
                 $", ID Num: {crate.IdNumber}, Price of Crate: {crate.Price}, Scenario: {scenario}");
         }
 
-        public void SumOfSimulation(StreamWriter stream, int totalNumOfTrucks, List<Dock> docks, int cratesUnloaded, double revenue)
+        /// <summary>
+        /// Adds necessary data and results to the SimulationResultsFile
+        /// </summary>
+        public void SumOfSimulation(StreamWriter stream, int totalNumOfTrucks, List<Dock> docks, int cratesUnloaded, double revenue, int longestLine)
         {
-            stream.WriteLine();
-            stream.WriteLine($"Total number of trucks: {totalNumOfTrucks}");
+            Road.Time -= 10;
 
             string remainingTrucks = "\nTrucks that were not unloaded before closing:";
             foreach (Dock dock in docks)
@@ -164,6 +175,34 @@ namespace _2210_NeedhamBrayden_Project3
                 }
             }
             stream.WriteLine(remainingTrucks);
+
+            stream.WriteLine($"\nTotal number of docks: {docks.Count}");
+
+            stream.WriteLine($"\nLongest line at an entrance: {longestLine}");
+
+            stream.WriteLine($"\nTotal number of trucks: {totalNumOfTrucks}");
+
+            stream.WriteLine($"\nNumber of crates unloaded: {cratesUnloaded}");
+
+            stream.WriteLine($"\nTotal value of crates unloaded: ${revenue}");
+
+            stream.WriteLine($"\nAverage value of the crates: ${Math.Round(revenue / cratesUnloaded),2}");
+
+            stream.WriteLine($"\nAverage value of the trucks: ${Math.Round(revenue / totalNumOfTrucks), 2}");
+
+            string timeInUse = "\nTotal time in use: ";
+            for (int i = 0; i < docks.Count; i++)
+            {
+                timeInUse += $"\nDock {i + 1}: {docks[i].TotalTimeInUse}";
+            }
+            stream.WriteLine(timeInUse);
+
+            string timeNotInUse = "\nTotal time not in use: ";
+            for (int i = 0; i < docks.Count; i++)
+            {
+                timeNotInUse += $"\nDock {i + 1}: {Road.Time - docks[i].TotalTimeInUse}";
+            }
+            stream.WriteLine(timeNotInUse);
 
             string costPerDock = "\nCost for operating each dock: ";
             for (int i = 0; i < docks.Count; i++)
@@ -180,26 +219,12 @@ namespace _2210_NeedhamBrayden_Project3
             }
             stream.WriteLine(dockRevenue);
 
-            stream.WriteLine($"\nNumber of crates unloaded: {cratesUnloaded}");
-
-            stream.WriteLine($"\nTotal value of crates unloaded: ${revenue}");
-
-            stream.WriteLine($"\nAverage value of the crates: ${Math.Round(revenue / cratesUnloaded), 2}");
-
-            string timeInUse = "\nTotal time in use: ";
-            for (int i = 0; i < docks.Count; i++)
+            int warehouseOperatingCost = 0;
+            foreach (Dock dock in docks)
             {
-                timeInUse += $"\nDock {i + 1}: {docks[i].TotalTimeInUse}";
+                warehouseOperatingCost += dock.OperatingCost;
             }
-            stream.WriteLine(timeInUse);
-
-            string timeNotInUse = "\nTotal time not in use: ";
-            for (int i = 0; i < docks.Count; i++)
-            {
-                timeNotInUse += $"\nDock {i + 1}: {500 - docks[i].TotalTimeInUse}";
-            }
-            stream.WriteLine(timeNotInUse);
-
+            stream.WriteLine($"\nWarehouse revenue: ${revenue - warehouseOperatingCost}");
         }
     }
 

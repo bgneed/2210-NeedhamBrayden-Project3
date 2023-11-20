@@ -17,7 +17,6 @@ namespace _2210_NeedhamBrayden_Project3
 {
     public class Road
     {
-        //Truck creation will take place here and will then feed into the warehouses Queue at the entrance
         public Queue<Truck> WaitLine;
 
         private int Likelihood;
@@ -25,8 +24,7 @@ namespace _2210_NeedhamBrayden_Project3
         public Warehouse Warehouse;
 
         public uint Time;
-        //Also crate creation will take place inside of the truck creation and a random Id number will be given to each crate that will then
-        //be tracked here to make sure each crate is unique and has a different number than every other crate
+
         public Road(Warehouse warehouse)
         {
             WaitLine = new Queue<Truck>();
@@ -34,8 +32,13 @@ namespace _2210_NeedhamBrayden_Project3
             Time = 0;
             Warehouse = warehouse;
         }
+
+        /// <summary>
+        /// Initializes the road, docks, and warehouse
+        /// </summary>
         public void Initialize(int numOfDocks)
         {
+            ResetTime();
             Warehouse.Docks  = new List<Dock>();
             for(int i = 0; i < numOfDocks; i++) 
             {
@@ -52,6 +55,9 @@ namespace _2210_NeedhamBrayden_Project3
         }
 
         #region Jacob Code
+        /// <summary>
+        /// Sends trucks to the warehouse entrance from the waitline. Then assigns them to docks
+        /// </summary>
         public void SendToEntrance()
         {
             for(int i = 0; i < WaitLine.Count; i++)
@@ -63,9 +69,14 @@ namespace _2210_NeedhamBrayden_Project3
                 Warehouse.AssignTruckToDock(Time);
             }
         }
+
+        /// <summary>
+        /// Adds trucks to the waitline based on time of day
+        /// Earlier time increments will be slower with truck creation. Mid time increments will be a lot more
+        /// full. late time increments will be slower as well
+        /// </summary>
         public void AddToWaitLine()
         {
-            //This will add trucks to the waitline based on the time of day
             if (GetTimeFrame() == "Early Morning")
             {
                 Likelihood = 10;
@@ -107,8 +118,6 @@ namespace _2210_NeedhamBrayden_Project3
                 QueueTrucks();
             }
         }
-        //Earlier time increments will be slower with truck creation. Mid time increments will be a lot more full
-        //late time increments will be slower as well
 
         /// <summary>
         /// This method will generate a number of trucks based on the likelihood value contained within this class
@@ -126,6 +135,7 @@ namespace _2210_NeedhamBrayden_Project3
                 WaitLine.Enqueue(truck);
             }
         }
+
         /// <summary>
         /// This method will use the Time property of the road class to get the time of day that the simulation is currently in.
         /// Returns a string based on the time of day and uses if statments to check what the time of day is
@@ -171,6 +181,7 @@ namespace _2210_NeedhamBrayden_Project3
                 throw new Exception("Invalid Time Increment");
             }
         }
+
         /// <summary>
         /// This method increments the time by one and adds it to the Time property
         /// </summary>
@@ -178,22 +189,13 @@ namespace _2210_NeedhamBrayden_Project3
         {
             Time += 10;
         }
+
         /// <summary>
         /// This method resets the time property back to 0
         /// </summary>
         public void ResetTime()
         {
             Time = 0;
-        }
-
-        public void UpdateTimeViaDock()
-        {
-            int i;
-            foreach (Dock d in Warehouse.Docks)
-            {
-                d.UpdateDock(Warehouse.Entrance, Time, out i);
-            }
-            IncrementTime();
         }
         #endregion
 

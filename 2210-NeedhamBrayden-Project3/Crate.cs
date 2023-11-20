@@ -28,6 +28,7 @@ namespace _2210_NeedhamBrayden_Project3
             IdNumber = "0";
             Price = 0;
         }
+
         public Crate(string idNumber, Truck truck)
         {
             IdNumber = idNumber;
@@ -37,11 +38,13 @@ namespace _2210_NeedhamBrayden_Project3
             double price = random.Next(50, 501);
             Price = price;
         }
+
         public Crate(Crate copyCrate)
         {
             IdNumber = copyCrate.IdNumber;
             Price = copyCrate.Price;
         }
+
         /// <summary>
         /// A method to compare two crates to each other. 
         /// Returns 0 if equal, -1 if not.

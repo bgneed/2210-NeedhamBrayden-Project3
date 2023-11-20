@@ -63,7 +63,6 @@ namespace _2210_NeedhamBrayden_Project3
             CurrentCrate = CurrentTruck.Unload(unloadTime); //There will be a problem here
             TotalCrates++;
             TotalSales += CurrentCrate.Price;
-            TotalTimeInUse += 10;
         }
         //Change trucks that are in the dock at the time: Remove Crate and Send Truck off in one increment
         //then on the next increment Bring new truck in and remove a crate 
@@ -109,6 +108,8 @@ namespace _2210_NeedhamBrayden_Project3
             //Check if truck in this dock == null
             if (CurrentTruck != null)
             {
+                TotalTimeInUse += 10;
+
                 //if not null then are there more than one crates to unload
                 if (CurrentTruck.Trailer.Count == 1)
                 {
