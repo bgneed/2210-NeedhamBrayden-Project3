@@ -132,9 +132,17 @@ namespace _2210_NeedhamBrayden_Project3
             else
             {
                 //if truck in dock == null then run new truck in if dock is open
-                NewTruckIn(Entrance.Dequeue(), time);
-                whatEventOcurred = 3;
-                return;
+                if (Entrance.Count > 0)
+                {
+                    NewTruckIn(Entrance.Dequeue(), time);
+                    whatEventOcurred = 3;
+                }
+                else
+                {
+
+                    whatEventOcurred = 4;
+                    return;
+                }
             }
         }
 

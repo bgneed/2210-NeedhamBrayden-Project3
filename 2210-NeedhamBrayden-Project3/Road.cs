@@ -110,12 +110,13 @@ namespace _2210_NeedhamBrayden_Project3
         //Earlier time increments will be slower with truck creation. Mid time increments will be a lot more full
         //late time increments will be slower as well
 
+        
         public void QueueTrucks()
         {
             Random randy = new Random();
 
-            int chance = randy.Next(1, Likelihood);
-            for (int i = 0; i <= chance; i++)
+            int chance = randy.Next(0, Likelihood);
+            for (int i = 0; i < chance; i++)
             {
                 Truck truck = new(Time);
                 WaitLine.Enqueue(truck);
@@ -183,14 +184,5 @@ namespace _2210_NeedhamBrayden_Project3
         }
         #endregion
 
-        public int LongestLine()
-        {
-            int currentLongest = WaitLine.Count;
-            if (currentLongest <= WaitLine.Count)
-            {
-                currentLongest = WaitLine.Count;
-            }
-            return currentLongest;
-        }
     }
 }

@@ -85,11 +85,6 @@ namespace _2210_NeedhamBrayden_Project3
                     {
 
                         int eventOcurred = 0;
-                        if (Entrance.Count == 0)
-                        {
-                            Road.AddToWaitLine();
-                            AddToEntrance(Road.WaitLine);
-                        }
 
                         dock.UpdateDock(Entrance, Road.Time, out eventOcurred);
 
@@ -104,6 +99,12 @@ namespace _2210_NeedhamBrayden_Project3
                         WriteToFile(dock.CurrentCrate, eventOcurred, csvOut);
                     }
                     Road.IncrementTime();
+
+                    if (Entrance.Count == 0)
+                    {
+                        Road.AddToWaitLine();
+                        AddToEntrance(Road.WaitLine);
+                    }
                 }
 
                 SumOfSimulation(csvOut, totalNumOfTrucks, Docks, cratesUnloaded, totalRevenue);
@@ -127,6 +128,9 @@ namespace _2210_NeedhamBrayden_Project3
                     break;
                 case 3:
                     scenario = "A new truck entered the dock, and a crate was unloaded.";
+                    break;
+                case 4:
+                    scenario = "There are currently no trucks to dock.";
                     break;
             }
 
@@ -173,6 +177,21 @@ namespace _2210_NeedhamBrayden_Project3
             stream.WriteLine($"\nTotal value of crates unloaded: ${revenue}");
 
             stream.WriteLine($"\nAverage value of the crates: ${Math.Round(revenue / cratesUnloaded), 2}");
+
+            string timeInUse = "\nTotal time in use: ";
+            for (int i = 0; i < docks.Count; i++)
+            {
+                timeInUse += $"\nDock {i + 1}: {docks[i].TotalTimeInUse}";
+            }
+            stream.WriteLine(timeInUse);
+
+            string timeNotInUse = "\nTotal time not in use: ";
+            for (int i = 0; i < docks.Count; i++)
+            {
+                timeNotInUse += $"\nDock {i + 1}: {500 - docks[i].TotalTimeInUse}";
+            }
+            stream.WriteLine(timeNotInUse);
+
         }
     }
 
