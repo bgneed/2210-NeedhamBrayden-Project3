@@ -17,16 +17,18 @@ namespace _2210_NeedhamBrayden_Project3
 {
     public class Dock
     {
-        public string IdNumber {  get; set; }
+        public string IdNumber { get; set; }
         public Truck? CurrentTruck { get; private set; }
         public double TotalSales { get; set; }
         public int TotalCrates { get; set; }
         public List<Crate> Crates { get; set; }
         public Crate CurrentCrate { get; set; }
         public int TotalTrucks { get; set; }
-        public bool OpenStatus {  get; set; }
+        public bool OpenStatus { get; set; }
         public uint TotalTimeInUse { get; set; }
         public uint TimeNotInUse { get; set; }
+        public int OperatingCost { get; set; }
+
         public Dock()
         {
             IdNumber = "00";
@@ -130,9 +132,17 @@ namespace _2210_NeedhamBrayden_Project3
             else
             {
                 //if truck in dock == null then run new truck in if dock is open
-                NewTruckIn(Entrance.Dequeue(), time);
-                whatEventOcurred = 3;
-                return;
+                if (Entrance.Count > 0)
+                {
+                    NewTruckIn(Entrance.Dequeue(), time);
+                    whatEventOcurred = 3;
+                }
+                else
+                {
+
+                    whatEventOcurred = 4;
+                    return;
+                }
             }
         }
 

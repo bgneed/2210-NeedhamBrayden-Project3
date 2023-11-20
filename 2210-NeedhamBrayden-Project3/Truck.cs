@@ -69,7 +69,7 @@ namespace _2210_NeedhamBrayden_Project3
         public List<Crate> GenerateCrates()
         {
             Random r = new Random();
-            int numOfCrates = r.Next(0, 6);
+            int numOfCrates = r.Next(1, 6);
 
             List<Crate> listOfCrates = new List<Crate>();
 

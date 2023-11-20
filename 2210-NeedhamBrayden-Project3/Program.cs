@@ -14,30 +14,61 @@ namespace _2210_NeedhamBrayden_Project3
     {
         static void Main(string[] args)
         {
-            //This is where the time increments should actually be added. Over the course of one time increment things will happen in
-            //different classes. For example, the warehouse class will transfer one truck to the next available dock if possible. If not
-            //the truck will stay in the entrance wait line. At each dock one crate can be unloaded, and a truck can leave in one 
-            //increment
-            //Warehouse warehouse = new Warehouse();
-            //warehouse.Run();
+            
+            Warehouse warehouse = new Warehouse();/*
+            Road r = new(warehouse);
+            r.Time = 300;
+            r.Initialize(5);
+            int w = 1;
+            Console.WriteLine(r.GetTimeFrame());
+            Console.WriteLine(r.WaitLine.Count);
 
+            foreach (Dock d in warehouse.Docks)
+            {
+                Console.WriteLine($"dock {w}");
+                if (d.CurrentTruck != null)
+                {
+                    Console.WriteLine(d.CurrentTruck.Driver);
+                    int count = d.CurrentTruck.Trailer.Count;
+                    for (int i = 0; i < count; i++)
+                    {
+                        Crate c = d.CurrentCrate;
+                        d.RemoveCrate(r.Time);
+                        Console.WriteLine(c.IdNumber);
+                    }
+                }
+
+                w++;
+
+            }
+
+            Console.ReadLine();*/
+            warehouse.Run();
+
+            /*
             StreamWriter csvOut = new StreamWriter(@"..\..\..\..\SimulationResults.csv");
 
             //What I would recommend doing is having a loop that goes through each dock and updates it and then writes to the file
             //for each dock as they are updated.
-            Warehouse warehouse = new Warehouse();
+            Warehouse Warehouse = new Warehouse();
             Road entranceRoad = new Road(warehouse);
             int numOfDocks = 5; //We can update this as needed
             entranceRoad.Initialize(numOfDocks);
-            while(entranceRoad.GetTimeFrame() != "End of Day")
+            
+            using (csvOut)
             {
-                foreach(Dock dock in warehouse.Docks)
+                while (entranceRoad.GetTimeFrame() != "End of Day")
                 {
-                    int eventOcurred = 0;
-                    dock.UpdateDock(warehouse.Entrance,entranceRoad.Time,out eventOcurred);
-                    WriteToFile(dock.CurrentCrate,eventOcurred,csvOut);
+                    foreach (Dock dock in warehouse.Docks)
+                    {
+                        int eventOcurred = 0;
+                        dock.UpdateDock(warehouse.Entrance, entranceRoad.Time, out eventOcurred);
+                        WriteToFile(dock.CurrentCrate, eventOcurred, csvOut);
+                    }
+                    entranceRoad.UpdateTimeViaDock();
                 }
-            }
+            }*/
+                
         }
         /// <summary>
         /// This method will write to the CSV file what 
@@ -58,8 +89,18 @@ namespace _2210_NeedhamBrayden_Project3
                 scenario = "A new truck entered the dock, and a crate was unloaded.";
                 break;
             }
+
+            if (crate == null)
+            {
+                return;
+            }
             stream.WriteLine($"Unload Time: {crate.TimeWhenUnloaded}, Trucker: {crate.DriversName}, Company: {crate.CompanyName}" +
                 $", ID Num: {crate.IdNumber}, Price of Crate: {crate.Price}, Scenario: {scenario}");
+        }
+
+        public void SumOfSimulation()
+        {
+
         }
     }
 }

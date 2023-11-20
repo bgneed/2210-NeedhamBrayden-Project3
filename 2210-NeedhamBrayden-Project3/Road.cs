@@ -24,7 +24,7 @@ namespace _2210_NeedhamBrayden_Project3
 
         public Warehouse Warehouse;
 
-        public uint Time {  get; private set; }
+        public uint Time;
         //Also crate creation will take place inside of the truck creation and a random Id number will be given to each crate that will then
         //be tracked here to make sure each crate is unique and has a different number than every other crate
         public Road(Warehouse warehouse)
@@ -37,7 +37,7 @@ namespace _2210_NeedhamBrayden_Project3
         public void Initialize(int numOfDocks)
         {
             Warehouse.Docks  = new List<Dock>();
-            for(int i = 0; i <= numOfDocks; i++) 
+            for(int i = 0; i < numOfDocks; i++) 
             {
                 Dock newDock = new Dock("0"+ i);
                 newDock.OpenStatus = true;
@@ -50,6 +50,7 @@ namespace _2210_NeedhamBrayden_Project3
                 Warehouse.AssignTruckToDock(Time);
             }
         }
+
         #region Jacob Code
         public void SendToEntrance()
         {
@@ -67,51 +68,55 @@ namespace _2210_NeedhamBrayden_Project3
             //This will add trucks to the waitline based on the time of day
             if (GetTimeFrame() == "Early Morning")
             {
-                Likelihood = 5;
+                Likelihood = 10;
                 QueueTrucks();
             }
             else if (GetTimeFrame() == "Morning")
             {
-                Likelihood = 3;
+                Likelihood = 6;
                 QueueTrucks();
             }
             else if (GetTimeFrame() == "Midday")
             {
-                Likelihood = 5;
+                Likelihood = 10;
                 QueueTrucks();
             }
             else if (GetTimeFrame() == "Pre Noon")
             {
-                Likelihood = 6;
+                Likelihood = 12;
                 QueueTrucks();
             }
             else if (GetTimeFrame() == "Noon")
             {
-                Likelihood = 10;
+                Likelihood = 20;
                 QueueTrucks();
             }
             else if (GetTimeFrame() == "After Noon")
             {
-                Likelihood = 4;
+                Likelihood = 8;
                 QueueTrucks();
             }
             else if (GetTimeFrame() == "Evening")
             {
-                Likelihood = 3;
+                Likelihood = 6;
                 QueueTrucks();
             }
             else if (GetTimeFrame() == "End of Day")
             {
-                Likelihood = 2;
+                Likelihood = 4;
                 QueueTrucks();
             }
         }
         //Earlier time increments will be slower with truck creation. Mid time increments will be a lot more full
         //late time increments will be slower as well
 
+        
         public void QueueTrucks()
         {
-            for (int i = 0; i <= Likelihood; i++)
+            Random randy = new Random();
+
+            int chance = randy.Next(0, Likelihood);
+            for (int i = 0; i < chance; i++)
             {
                 Truck truck = new(Time);
                 WaitLine.Enqueue(truck);
@@ -148,7 +153,7 @@ namespace _2210_NeedhamBrayden_Project3
             {
                 return "Evening";
             }
-            else if (Time > 480)
+            else if (Time >= 480)
             {
                 return "End of Day";
             }
@@ -168,15 +173,16 @@ namespace _2210_NeedhamBrayden_Project3
             Time = 0;
         }
 
-        //public void UpdateTimeViaDock()
-        //{
-        //    int i;
-        //    foreach (Dock d in Warehouse.Docks)
-        //    {
-        //        d.UpdateDock(Warehouse.Entrance, Time, out i);
-        //    }
-        //    IncrementTime();
-        //}
+        public void UpdateTimeViaDock()
+        {
+            int i;
+            foreach (Dock d in Warehouse.Docks)
+            {
+                d.UpdateDock(Warehouse.Entrance, Time, out i);
+            }
+            IncrementTime();
+        }
         #endregion
+
     }
 }
