@@ -37,6 +37,7 @@ namespace _2210_NeedhamBrayden_Project3
                     dock.UpdateDock(warehouse.Entrance,entranceRoad.Time,out eventOcurred);
                     WriteToFile(dock.CurrentCrate,eventOcurred,csvOut);
                 }
+                entranceRoad.IncrementTime();
             }
         }
         /// <summary>
